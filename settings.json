@@ -1,0 +1,9 @@
+{
+  "address": "127.0.0.1",
+  "port": 5000,
+  "ErrorLogFile":"Log.csv",
+  "file_path": "DataImport",
+  "timeout": 5 ,
+  "propperties": "propperties.json"
+
+}

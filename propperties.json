@@ -1,0 +1,10 @@
+{
+  "massegeToSent":{
+    "patient":{
+      "PID": "", "APID":"", "NAME":"","MN":"","BD":"","SEX":"","DCODE":"","HT":"","WT":"","ADMS":"","LC":"","DTR": ""
+    },
+    "order":{
+      "ONO": "","RQDT":"","TESTID": "","PRI": "", "CLDT": "" ,"CVLM": "", "ACCD": "","RCINF": "","RCDT": "","SRC": "","DTR": "", "PSID":""
+    }
+  }
+}

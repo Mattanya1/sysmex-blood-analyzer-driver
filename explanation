@@ -1,0 +1,77 @@
+Header H
+
+[Management Information]
+Patient Segment P
+Observation Order Segment OBR
+Result Observation Segment OBX
+Comment Segment C
+Request Results Segment Q
+Message Terminator L
+Scientific Segment S
+Reagent Information Z
+
+[important]
+H: Header Record            ->
+    f"H | ^ ~ \ & | | | | | | | | | | | A.2 | {time.strftime('%Y%m%d%H%M', time.localtime())}\n"
+
+P: Patient Record           ->
+    global PATIENT_NUM
+    # Date of Birth in Format: YYYYMMDD
+    #Gender M: Male, F: Female, U: Unknown
+    #Admission status In/Out
+    # args -> PID, APID, NAME,MN,BD,SEX,DCODE,HT,WT,ADMS,LC,DTR
+    f"P |{PATIENT_NUM%9999}| {PID} | | {APID} | {NAME} | {MN} | {BD} | {SEX} | | | | | {DCODE} | | | {HT} | {WT} | | | | | | | {ADMS} |{LC} | | | | | | | {DTR} \n"
+
+OBR: Order Record           ->
+    OBR
+    SEQ - Sequence number #global Record_NUM
+    ONO - Requester specimen ID or accession number Sample No. (Barcode No.)* (HOST side) 29
+    SNO -(SUIT side)
+    TESTID - ID of  Test Item Code^Name
+        When ordering multiple orders, use the Repeat character, “~”,
+        to proceed as below:
+        Code1^Name1~Code2^Name2~Code3^Name3 ~ …
+        If is too long, the part
+        that exceeded 200 characters
+        cannot be registered. When it
+        is over 200, it has to send the
+        order twice for one sample.
+
+    (6) PRI - Priority Processing Priority Level: S: STAT / Urgent
+    (7) OBR-7 Requested datetime
+    (8) CLDT - Specimen
+        collection or
+        observation
+        date-time
+        Sample Collection Date/Time
+        Format: YYYYMMDDHHMM 12 Y Y
+
+    (10) CVLM - Collection volumeUnit ml
+    (12) ACCD - Action code Order Process Code
+        <For New Samples>
+        Register with the following:
+        “A”: Add the ordered
+        “L”: Lab. To obtain a sample
+        <For Registered Samples>
+        “A”: Clear registered order(s),
+        register the order as new.
+        “L”: Add orders
+    (14) RCINF - Relevant clinical information
+        Patient Comment^Sample Comment
+        The code for Patient Comment
+        1~2~3~4~5^the code for
+        Sample Comment1~2
+        48
+    (15) RCDT - Date and time of specimen receipt
+        Registration Date/Time
+        Format: YYYYMMDDHHMM 12 Y Y
+    (16) SRC - Source of specimen
+        Tube Type Code^Collection Source Code
+        98
+
+    Tube Type 1^Collection Source~ Tube Type 2^Collection Source~ …. Tube Type 9^Collection Source
+    (18) DTR - Date and time observation reported or status changed
+        Report (Update) Date/Time
+        Format: YYYYMMDDHHMM 12 N Y
+
+    (22) QT - Quantity- Timing Order Comment Code 6
